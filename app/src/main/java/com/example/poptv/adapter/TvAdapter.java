@@ -38,7 +38,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tv_judul.setText(mResultItem.get(position).getName());
-        holder.tv_popularity.setText(mResultItem.get(position).getPopularity().toString());
+        holder.tv_popularity.setText("Popularity: "+mResultItem.get(position).getPopularity().toString());
         String url = "https://image.tmdb.org/t/p/w200" + mResultItem.get(position).getPosterPath();
         Glide.with(mContext).load(url).diskCacheStrategy(DiskCacheStrategy.RESOURCE).error(R.mipmap.logo).into(holder.iv_tv);
         holder.click.setOnClickListener(v -> {

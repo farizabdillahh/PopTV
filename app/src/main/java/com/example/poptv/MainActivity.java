@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rv;
     private ArrayList<ResultsItem> resultsItems;
     private TvAdapter tvAdapter;
-
     private Text mAlarm;
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "com.example.poptv";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         resultsItems = new ArrayList<>();
-
         getData();
+        mPreferences = getSharedPreferences(sharedPrefFile,MODE_PRIVATE);
     }
 
     private void getData() {
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         rv = findViewById(R.id.recyclerView);
-        mAlarm= findViewById(R.id.action_alarm);
+        mAlarm = findViewById(R.id.action_alarm);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,5 +91,13 @@ public class MainActivity extends AppCompatActivity {
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.apply();
     }
 }
